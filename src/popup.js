@@ -33,6 +33,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         handle_highlightWords_change(tabkey);
                     }
                 });
+
+
                 // register listener
                 $("#delimiter").on("input", function () {
                     handle_delimiter_change(tabkey, settings);
