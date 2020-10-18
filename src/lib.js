@@ -48,16 +48,16 @@ function hl_clearall(settings, tabinfo) {
 
 function hl_dblclick(settings, tabinfo, className) {
     console.log(className)
+    code = "$('." + className + "').dblclick(function(e){"
+        + "alert($(this).text())"
+        + "})"
+
     chrome.tabs.executeScript(tabinfo.id,
         {
-            code: "$('." + className + "').dblclick(function(e){"
-                + "alert($(this).text())"
-                + "})"
+            code: code
         }, _ => chrome.runtime.lastError);
 
-    console.log("$('." + className + "').dblclick(function(e){"
-        + "alert($(this).text())"
-        + "})")
+    console.log(code)
 
 
 }
