@@ -2,9 +2,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
     // initialize variables
     var settings = {
         // Pop-up window settings
-        popup_width: 340,
-        popup_height: 40,
-
         // CSS settings
         CSS_COLORS_COUNT: 10, // number of available highlight colors
         CSSprefix1: "chrome-extension-FindManyStrings",

@@ -1,0 +1,157 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+}
+
+#container {
+	height: 194px;
+	padding: 3px;
+	font-family: Arial;
+}
+
+.textarea-wrap {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+/* Tip */
+.textarea-wrap .tip {
+	display: block;
+	overflow: hidden;
+	height: 16px;
+	line-height: 16px;
+	vertical-align: middle;
+	padding-bottom: 3px;
+	/* disable double clicking popup text */
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently
+                          supported by Chrome and Opera */
+}
+
+.textarea-wrap .tip .main-tip {
+	font-size: 13px;
+	color: #606060;
+	font-weight: bold;
+}
+
+.textarea-wrap .tip .sub-tip {
+	font-size: 11px;
+	color: #484848;
+	padding-top: 1px;
+}
+
+.highlight-words {
+	flex-grow: 1;
+	border: 1px dashed #aaa;
+	border-radius: 2px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
+}
+
+.highlight-words textarea {
+	display: block;
+	width: 100%;
+	height: 100%;
+	min-height: 40px;
+	padding: 5px;
+	box-sizing: border-box;
+	outline: 0;
+	border: 0;
+	background: transparent;
+	resize: none;
+}
+
+.highlight-words,
+.highlight-words textarea {
+	line-height: 16px;
+	font-size: 12px;
+	color: #666;
+}
+
+/* delimiter */
+.textarea-wrap .tip .sub-tip #delimiter {
+	width: 1em;
+	height: 70%;
+	border: 0px;
+	text-align: center;
+	background-color: #c6e8ff;
+	border-radius: 5px;
+	color: #666;
+	font-size: 14px;
+}
+
+/* vinc */
+.textarea-wrap .tip .sub-tip #delimiter:focus {
+	border: 0px;
+} /* vinc */
+
+/* instant, saveWords */
+.textarea-wrap .tip .sub-tip input#instant,
+.textarea-wrap .tip .sub-tip input#saveWords {
+	width: 13px;
+	height: 13px;
+	padding: 0;
+	margin: 0;
+	vertical-align: bottom;
+	position: relative;
+	top: -1px;
+	*overflow: hidden;
+}
+
+/* Scroll bar */
+.highlight-words textarea::-webkit-scrollbar {
+	width: 11px;
+	height: auto;
+}
+
+.highlight-words textarea::-webkit-scrollbar-button {
+}
+
+.highlight-words textarea::-webkit-scrollbar-button:start:decrement,
+.highlight-words textarea::-webkit-scrollbar-button:end:increment {
+	width: 0;
+	height: 0;
+}
+
+.highlight-words textarea::-webkit-scrollbar-track-piece {
+	background-clip: padding-box;
+	background-color: #fff;
+	border: 0;
+}
+
+.highlight-words textarea::-webkit-scrollbar-thumb {
+	border-radius: 7px;
+	background-color: #888;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+	-webkit-transition: all 0.5s ease;
+}
+
+.highlight-words textarea::-webkit-scrollbar-thumb:hover {
+	background-color: #777;
+}
+
+.highlight-words textarea::-webkit-scrollbar-thumb:vertical {
+	width: 7px;
+	min-height: 24px;
+}
+
+.highlight-words textarea::-webkit-scrollbar-thumb:horizontal {
+	height: 7px;
+	min-width: 24px;
+}
