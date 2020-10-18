@@ -18,10 +18,12 @@ function hl_search(addedKws, settings, tabinfo) {
                     + "', {className:'"
                     + settings.CSSprefix1 + " "
                     + (settings.CSSprefix2 + (tabinfo.style_nbr % settings.CSS_COLORS_COUNT)) + " "
-                    + (settings.CSSprefix3 + encodeURI(addedKws[i])) // escape special characters
+                    + (settings.CSSprefix3 + (addedKws[i])) // escape special characters
                     + "'})"
             }, _ => chrome.runtime.lastError);
         tabinfo.style_nbr += 1;
+
+        hl_dblclick(settings, tabinfo, (settings.CSSprefix3 + (addedKws[i])))
     }
 }
 
@@ -30,7 +32,7 @@ function hl_clear(removedKws, settings, tabinfo) {
     // remove in reverse order to avoid removing nested-highlighted-words
     for (var i = removedKws.length - 1; i >= 0; i--) {
         // escape meta-characters, special characters
-        className = (settings.CSSprefix3 + encodeURI(removedKws[i])).replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\\\$&");
+        className = (settings.CSSprefix3 + (removedKws[i])).replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\\\$&");
         chrome.tabs.executeScript(tabinfo.id,
             { code: "$(document.body).unhighlight({className:'" + className + "'})" }, _ => chrome.runtime.lastError);
         tabinfo.style_nbr -= 1;
@@ -44,13 +46,20 @@ function hl_clearall(settings, tabinfo) {
 }
 
 
-function hl_dblclick(settings, tabinfo) {
+function hl_dblclick(settings, tabinfo, className) {
+    console.log(className)
     chrome.tabs.executeScript(tabinfo.id,
         {
-            code: "$('." + settings.CSSprefix1 + "').dblclick(function(e){"
+            code: "$('." + className + "').dblclick(function(e){"
                 + "alert($(this).text())"
                 + "})"
         }, _ => chrome.runtime.lastError);
+
+    console.log("$('." + className + "').dblclick(function(e){"
+        + "alert($(this).text())"
+        + "})")
+
+
 }
 
 
@@ -68,7 +77,7 @@ function handle_highlightWords_change(tabkey) {
             removedKws = $(tabinfo.keywords).not(inputKws).get(); // get tokens only occur in old input
             hl_clear(removedKws, settings, tabinfo);
             hl_search(addedKws, settings, tabinfo);
-            hl_dblclick(settings, tabinfo);
+            // hl_dblclick(settings, tabinfo);
             tabinfo.keywords = inputKws;
             settings.latest_keywords = inputKws;
             chrome.storage.local.set({ [tabkey]: tabinfo, "settings": settings });
