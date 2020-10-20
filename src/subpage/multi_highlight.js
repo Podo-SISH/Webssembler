@@ -16,10 +16,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // init popup values
                 delimiter.value = settings.delim;
-                console.log(tabinfo)
-                if (tabinfo.isNewPage) { // decide which keywords to fill in
+                instant.checked = settings.isInstant;
+                saveWords.checked = settings.isSaveKws;
+
+
+                if (settings.isSaveKws && tabinfo.isNewPage) { // decide which keywords to fill in
                     flag.is_change = true;
-                    highlightWords.value = settings.latest_keywords.join(settings.delim);
+                    if (settings.latest_keywords != "") {
+                        highlightWords.value = settings.latest_keywords.join(settings.delim);
+                    }
                 } else {
                     highlightWords.value = tabinfo.keywords.join(settings.delim);
                 }
@@ -30,8 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         handle_highlightWords_change(tabkey);
                     }
                 });
-
-
                 // register listener
                 $("#delimiter").on("input", function () {
                     handle_delimiter_change(tabkey, settings);
@@ -41,9 +44,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 $("#instant").on("input", function () {
                     handle_instant_mode_change(settings);
+                    console.log("handle_instant_mode_change")
+                    console.log(settings)
                 })
                 $("#saveWords").on("input", function () {
                     handle_saveWords_mode_change(settings);
+                    console.log("handle_saveWords_mode_change")
+                    console.log(settings)
                 })
 
             });

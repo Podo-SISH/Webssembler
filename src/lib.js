@@ -48,14 +48,27 @@ function hl_clearall(settings, tabinfo) {
 
 function hl_dblclick(settings, tabinfo, className) {
     console.log(className)
+
     code = "$('." + className + "').dblclick(function(e){"
-        + "alert($(this).text())"
-        + "})"
+            + "console.log($(e).text());"
+            + "position = $(e).parentsUntil('body');"
+            + "chrome.runtime.sendMessage({"
+                    + "event: 'dblclick',"
+                    + "keyword: $(e).text(),"
+                    + "url: window.location.href,"
+                    + "title: document.title,"
+                    + "position: position.toString()"
+            + "});"
+        + "});"   
 
     chrome.tabs.executeScript(tabinfo.id,
         {
             code: code
-        }, _ => chrome.runtime.lastError);
+        }, (e) => {
+            console.log(e[0])
+            chrome.runtime.lastError
+        }
+    );
 
     console.log(code)
 
@@ -77,7 +90,6 @@ function handle_highlightWords_change(tabkey) {
             removedKws = $(tabinfo.keywords).not(inputKws).get(); // get tokens only occur in old input
             hl_clear(removedKws, settings, tabinfo);
             hl_search(addedKws, settings, tabinfo);
-            // hl_dblclick(settings, tabinfo);
             tabinfo.keywords = inputKws;
             settings.latest_keywords = inputKws;
             chrome.storage.local.set({ [tabkey]: tabinfo, "settings": settings });

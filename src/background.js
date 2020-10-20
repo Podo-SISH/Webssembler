@@ -1,7 +1,6 @@
 chrome.runtime.onInstalled.addListener(function (details) {
     // initialize variables
     var settings = {
-        // Pop-up window settings
         // CSS settings
         CSS_COLORS_COUNT: 10, // number of available highlight colors
         CSSprefix1: "chrome-extension-FindManyStrings",
@@ -31,7 +30,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
         contexts: ['selection'],
     });
 
-    chrome.storage.local.set({'settings': settings});
+    chrome.storage.local.set({ 'settings': settings });
 });
 
 // handle new page opened
@@ -43,7 +42,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, info) {
         tabinfo.style_nbr = 0;
         tabinfo.isNewPage = true;
         tabinfo.keywords = [];
-        chrome.storage.local.set({[tabkey]: tabinfo});
+        chrome.storage.local.set({ [tabkey]: tabinfo });
     }
 });
 
@@ -71,7 +70,7 @@ chrome.contextMenus.onClicked.addListener(function getword(info, tab) {
             }
             settings.latest_keywords = tabinfo.keywords;
             hl_clear([kw], settings, tabinfo);
-            chrome.storage.local.set({[tabkey]: tabinfo, "settings": settings}, function () {
+            chrome.storage.local.set({ [tabkey]: tabinfo, "settings": settings }, function () {
             });
         });
     } else if (info.menuItemId === "addKw") {
@@ -82,9 +81,24 @@ chrome.contextMenus.onClicked.addListener(function getword(info, tab) {
             tabinfo.keywords.push(kw);
             settings.latest_keywords = tabinfo.keywords;
             hl_search([kw], settings, tabinfo);
-            chrome.storage.local.set({[tabkey]: tabinfo, "settings": settings}, function () {
+            chrome.storage.local.set({ [tabkey]: tabinfo, "settings": settings }, function () {
             });
         });
     }
 
 });
+
+chrome.runtime.onMessage.addListener(function (message) {
+    if (message.event == "dblclick") {
+
+        var today = new Date
+        message.datetime = today.toLocaleString()
+
+        console.log("background.js / dblclick messageListen : ")
+        console.log(message)
+
+        // Todo : 받은 정보(키워드, url, 타이틀 등)를 local storage에 저장
+
+    }
+
+})
