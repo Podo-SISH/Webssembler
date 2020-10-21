@@ -60,7 +60,7 @@ function hl_dblclick(settings, tabinfo, className, keyword) {
         + "    });"
         + "});"
 
-    chrome.tabs.executeScript(tabinfo.id,
+    chrome.tabs.executeScript (tabinfo.id,
         {
             code: code
         }, _ => chrome.runtime.lastError

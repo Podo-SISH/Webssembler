@@ -1,13 +1,16 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.wrap {
+    width: 100%;
+    height: 300px;
+    overflow-y: hidden;
     user-select: none;
 }
 
-.wrap {
+.simple {
     width: 100%;
-    height: 350px;
+    height: 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .simpledown {
@@ -37,41 +40,79 @@
 }
 
 .list {
+    width: 100%;
+    height: calc(100% - 30px);
+    margin-top: 30px;
     display: flex;
 }
 
-.row3 {
-    flex: 1;
-    border-right: 1px solid #000;
-    padding-top: 2px;
+.list_left {
+    position: fixed;
+    top: 30px;
+    left: 0;
+    width: 90px;
+    height: 100%;
+    background-color: rgba(32, 115, 224, 0.55);
 }
 
-.noborder {
-    border: 0;
-}
-
-.row3 > div:first-child {
+.list_left > label {
     width: 100%;
-    height: 20px;
-    line-height: 19px;
-    text-align: center;
-    border-bottom: 1px solid #000;
-}
-
-.column2 {
-    padding-top: 5px;
+    height: 30px;
+    display: inline-block;
     padding-left: 10px;
-    padding-right: 10px;
-    border-bottom: 1px solid #000;
+    font-size: 11px;
+    line-height: 30px;
+    color: #fff;
+    cursor: pointer;
 }
 
-.column2 > div {
+.list_left > label:hover {
+    background-color: rgba(77, 127, 201, 0.95);
+}
+
+.list_left > label:last-child {
+    /* border-bottom: 0px; */
+}
+
+.list_right {
+    margin-left: 90px;
+    width: calc(100% - 90px);
+    overflow-y: scroll;
+}
+
+.list_right > div > div:last-child {
+    border-bottom: 0px;
+}
+
+.lr_list{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #222;
+}
+
+.lr_list > div {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 3px;
-    align-items: center;
 }
 
-.column2 > div:last-child {
-    margin-bottom: 5px;
+.list_right label {
+    display: inline-block;
+    width: 200px;
+}
+
+.keyword_list {
+    display: none;
+}
+
+.keyword1_list {
+    display: block;
+}
+
+.keyword_radio:checked + label {
+    font-weight: bold;
+    background-color: rgb(77, 127, 201);
 }

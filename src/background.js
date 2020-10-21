@@ -88,7 +88,7 @@ chrome.contextMenus.onClicked.addListener(function getword(info, tab) {
 
 });
 
-chrome.runtime.onMessage.addListener(function (message) {
+chrome.runtime.onMessage.addListener(async function (message) {
     if (message.event == "dblclick") {
 
         delete (message.event)
@@ -96,33 +96,55 @@ chrome.runtime.onMessage.addListener(function (message) {
         var today = new Date
         message.datetime = today.toLocaleString()
 
-        console.log("background.js / dblclick messageListen : ")
-        console.log(message)
 
+        // console.log("background.js / dblclick messageListen : ")
+        // console.log(message)
 
         save_keyword_on_sync(message.keyword, message)
-
     }
 })
 
 // 키워드 저장, 근데 중복되는 키워드도 다 저장함.
 // 유니크 키를 하나 정해서 중복 제거 해야함
-function save_keyword_on_sync(keyword, value) {
-    chrome.storage.sync.get("keyword", function (result) {
+async function save_keyword_on_sync(keyword, value) {
+    await chrome.storage.sync.get("keyword", function (result) {
+
         storage = result.keyword
+        // storage = {}
 
         if (storage == null) storage = {}
 
         if (storage[keyword] == null) keywordArr = []
         else keywordArr = storage[keyword]
 
+        for (i = 0; i < keywordArr.length; i++) {
+            if (keywordArr[i].url == value.url && keywordArr[i].position == value.position) {
+                alert_to_tab("이미 저장된 키워드입니다.")
+
+                return
+            }
+        };
+
         keywordArr.push(value)
+
         storage[keyword] = keywordArr
 
 
         chrome.storage.sync.set({ "keyword": storage }, function () {
             console.log('Value is set to ');
             console.log(storage)
+
+            alert_to_tab("키워드가 저장되었습니다. [" + keyword + "]")
         });
     });
+}
+
+
+function alert_to_tab(message) {
+    code = "alert('" + message + "');"
+
+    chrome.tabs.executeScript(null,
+        {
+            code: code
+        }, _ => chrome.runtime.lastError);
 }
