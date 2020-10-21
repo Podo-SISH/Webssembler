@@ -24,7 +24,7 @@
       "css": [ "highlight.css" ]
    } ],
   "background": {
-    "scripts": [ "lib.js", "background.js" ],
+    "scripts": [ "Keyword.js", "lib.js", "background.js" ],
     "persistent": false
   },
   "commands": {

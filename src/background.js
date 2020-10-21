@@ -94,8 +94,29 @@ chrome.runtime.onMessage.addListener(function (message) {
         var today = new Date
         message.datetime = today.toLocaleString()
 
-        console.log("background.js / dblclick messageListen : ")
-        console.log(message)
+        // console.log("background.js / dblclick messageListen : ")
+        // console.log(message)
+
+
+
+        // 키워드 저장, 근데 중복되는 키워드도 다 저장함. 유니크 키를 하나 정해서 중복 제거 해야함 
+        chrome.storage.sync.get("keyword", function (result) {
+            storage = result.keyword
+
+            if (storage == null) storage = {}
+
+            if (storage[message.keyword] == null) keywordArr = []
+            else keywordArr = storage[message.keyword]
+
+            keywordArr.push(message)
+            storage[message.keyword] = keywordArr
+
+
+            chrome.storage.sync.set({ "keyword": storage }, function () {
+                console.log('Value is set to ');
+                console.log(storage)
+            });
+        });
 
         // Todo : 받은 정보(키워드, url, 타이틀 등)를 local storage에 저장
 
