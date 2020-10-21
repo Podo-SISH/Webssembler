@@ -19,11 +19,13 @@ function hl_search(addedKws, settings, tabinfo) {
                     + settings.CSSprefix1 + " "
                     + (settings.CSSprefix2 + (tabinfo.style_nbr % settings.CSS_COLORS_COUNT)) + " "
                     + (settings.CSSprefix3 + (addedKws[i])) // escape special characters
-                    + "'})"
+                    + "'});"
+                    + "var " + (addedKws[i])
+                    + "= $('." + (settings.CSSprefix3 + (addedKws[i])) + "');"
             }, _ => chrome.runtime.lastError);
         tabinfo.style_nbr += 1;
 
-        hl_dblclick(settings, tabinfo, (settings.CSSprefix3 + (addedKws[i])))
+        hl_dblclick(settings, tabinfo, (settings.CSSprefix3 + (addedKws[i])), (addedKws[i]))
     }
 }
 
@@ -45,34 +47,31 @@ function hl_clearall(settings, tabinfo) {
         { code: "$(document.body).unhighlight({className:'" + settings.CSSprefix1 + "'})" }, _ => chrome.runtime.lastError);
 }
 
-
-function hl_dblclick(settings, tabinfo, className) {
+function hl_dblclick(settings, tabinfo, className, keyword) {
     console.log(className)
-
-    code = "$('." + className + "').dblclick(function(e){"
-            + "console.log($(e).text());"
-            + "position = $(e).parentsUntil('body');"
-            + "chrome.runtime.sendMessage({"
-                    + "event: 'dblclick',"
-                    + "keyword: $(e).text(),"
-                    + "url: window.location.href,"
-                    + "title: document.title,"
-                    + "position: position.toString()"
-            + "});"
-        + "});"   
+    code = 
+          "$('." + className + "').dblclick(function(e){"
+        + "    position = 0;"
+        + "    console.log(" + keyword + ");"
+        +      (keyword) + ".each((idx, element) => {"
+        + "        if(element == e.target){"
+        + "            position = idx;"
+        + "        }"
+        + "    });"
+        + "    chrome.runtime.sendMessage({"
+        + "        event: 'dblclick',"
+        + "        keyword: $(this).text(),"
+        + "        url: window.location.href,"
+        + "        title: document.title,"
+        + "        position: position"
+        + "    });"
+        + "});"
 
     chrome.tabs.executeScript(tabinfo.id,
         {
             code: code
-        }, (e) => {
-            console.log(e[0])
-            chrome.runtime.lastError
-        }
+        }, _ => chrome.runtime.lastError
     );
-
-    console.log(code)
-
-
 }
 
 
