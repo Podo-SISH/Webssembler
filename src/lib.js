@@ -1,8 +1,3 @@
-// ************************************************************************
-// Multi Highlight Library
-// ************************************************************************
-
-
 // ****** general functions
 function get_tabkey(tabId) {
     return "multi-highlight_" + tabId;
@@ -48,12 +43,10 @@ function hl_clearall(settings, tabinfo) {
 }
 
 function hl_dblclick(settings, tabinfo, className, keyword) {
-    console.log(className)
-    code = 
-          "$('." + className + "').dblclick(function(e){"
+    code =
+        "$('." + className + "').dblclick(function(e){"
         + "    position = 0;"
-        + "    console.log(" + keyword + ");"
-        +      (keyword) + ".each((idx, element) => {"
+        + (keyword) + ".each((idx, element) => {"
         + "        if(element == e.target){"
         + "            position = idx;"
         + "        }"
@@ -188,3 +181,4 @@ function handle_popupSize_change(newHeight, newWidth) {
         }
     });
 }
+

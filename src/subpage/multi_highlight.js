@@ -44,13 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 $("#instant").on("input", function () {
                     handle_instant_mode_change(settings);
-                    console.log("handle_instant_mode_change")
-                    console.log(settings)
                 })
                 $("#saveWords").on("input", function () {
                     handle_saveWords_mode_change(settings);
-                    console.log("handle_saveWords_mode_change")
-                    console.log(settings)
                 })
 
             });

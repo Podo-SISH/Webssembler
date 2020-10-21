@@ -1,6 +1,4 @@
 {
-"update_url": "https://clients2.google.com/service/update2/crx",
-
   "manifest_version": 2,
   "name": "Webssembler",
   "version": "1.0",
@@ -24,7 +22,7 @@
       "css": [ "highlight.css" ]
    } ],
   "background": {
-    "scripts": [ "Keyword.js", "lib.js", "background.js" ],
+    "scripts": [ "lib.js", "background.js" ],
     "persistent": false
   },
   "commands": {
