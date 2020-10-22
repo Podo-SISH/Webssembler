@@ -97,17 +97,14 @@ chrome.runtime.onMessage.addListener(async function (message) {
         message.datetime = today.toLocaleString()
 
         message.url = decodeURI(message.url)
-
-
+        
         // console.log("background.js / dblclick messageListen : ")
         // console.log(message)
 
-        save_keyword_on_sync(message.keyword, message)
+        save_keyword_on_sync(message.keyword.toLowerCase(), message)
     }
 })
 
-// 키워드 저장, 근데 중복되는 키워드도 다 저장함.
-// 유니크 키를 하나 정해서 중복 제거 해야함
 async function save_keyword_on_sync(keyword, value) {
     await chrome.storage.sync.get("keyword", function (result) {
 

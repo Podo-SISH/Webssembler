@@ -72,15 +72,17 @@ window.onload = () => {
 
     resetBtn.addEventListener("click", () => {
         chrome.storage.sync.set({ "keyword": {} })
-        
+
         alert("데이터가 초기화 되었습니다.")
     })
 
-    function copyToCliipBoard(keyword) {
-        keys = Object.keys(keyword)
-        exp = ""
+    function copyToCliipBoard(keywords) {
 
-        exp = JSON.stringify(keyword, null, ' ')
+        // exp = JSON.stringify(keywords, null, ' ')
+
+        exp = exportFormat(keywords)
+        // 우리가 원하는 export 포맷으로 string 변환하는 함수 필요
+
 
         var t = document.createElement("textarea");
         document.body.appendChild(t);
@@ -90,5 +92,56 @@ window.onload = () => {
         document.body.removeChild(t);
 
         alert("클립보드에 복사되었습니다.")
+    }
+
+    function exportFormat(keywords) {
+        keys = Object.keys(keywords)
+        exp = ""
+
+        keys.forEach(key => {
+            exp += key + ' :'
+            keyword = keywords[key]
+
+            keyword.sort((a, b) => {
+                var aTitle = a.title
+                var bTitle = b.title
+
+                if (aTitle > bTitle) {
+                    return 1
+                }
+                else if (aTitle < bTitle) {
+                    return -1
+                }
+                else {
+                    if (a.position > b.position) {
+                        return 1
+                    }
+                    else {
+                        return -1
+                    }
+                }
+            })
+
+            var idx = 0
+            keyword.forEach((element, i) => {
+
+                if (i > 0 && keyword[i - 1].title == element.title) {
+                    exp += ", " + (element.position + 1) + "번째 키워드";
+
+                } else {
+                    idx++;
+
+                    exp += '\n';
+                    exp += (idx) + '. ';
+                    exp += element.title + "(" + element.url + ") | ";
+                    exp += (element.position + 1) + "번째 키워드";
+                }
+
+            });
+            exp += '\n\n';
+        });
+
+        return exp
+
     }
 }
