@@ -1,118 +1,119 @@
 .wrap {
-    width: 100%;
-    height: 300px;
-    overflow-y: hidden;
-    user-select: none;
+	width: 100%;
+	height: 300px;
+	overflow-y: hidden;
+	user-select: none;
 }
 
 .simple {
-    width: 100%;
-    height: 30px;
-    position: fixed;
-    top: 0;
-    left: 0;
+	width: 100%;
+	height: 30px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	background-color: rgb(77, 127, 201);
 }
 
-.simpledown {
-    width: 100%;
-    height: 30px;
-    text-align: center;
-    line-height: 30px;
-    background-color: rgb(77, 127, 201);
-}
-
-.change , .delete {
-    width: 40px;
+.simple > * {
     height: 20px;
-    text-align: center;
-    position: absolute;
-    line-height: 20px;
-    top: 5px;
-    color: #fff;
+	width: fit-content;
+	text-align: center;
+	line-height: 20px;
+	color: #fff;
+	padding: 0 5px;
+    margin: 0 5px;
+    transition: 0.2s;
+}
+
+.simple > *:hover {
+    background-color: rgb(141, 180, 240);
 }
 
 .change {
-    right: 70px;
+	right: 70px;
 }
 
 .delete {
-    right: 20px;
+	right: 20px;
 }
 
 .list {
-    width: 100%;
-    height: calc(100% - 30px);
-    margin-top: 30px;
-    display: flex;
+	width: 100%;
+	height: calc(100% - 30px);
+	margin-top: 30px;
+	display: flex;
 }
 
 .list_left {
-    position: fixed;
-    top: 30px;
-    left: 0;
-    width: 90px;
-    height: 100%;
-    background-color: rgba(32, 115, 224, 0.55);
+	position: fixed;
+	top: 30px;
+	left: 0;
+	width: 90px;
+	height: 100%;
+	background-color: rgba(32, 115, 224, 0.55);
 }
 
 .list_left > label {
-    width: 100%;
-    height: 30px;
-    display: inline-block;
-    padding-left: 10px;
-    font-size: 11px;
-    line-height: 30px;
-    color: #fff;
-    cursor: pointer;
+	width: 100%;
+	height: 30px;
+	display: inline-block;
+	padding-left: 10px;
+	font-size: 11px;
+	line-height: 30px;
+	color: #fff;
+	cursor: pointer;
 }
 
 .list_left > label:hover {
-    background-color: rgba(77, 127, 201, 0.95);
+	background-color: rgba(77, 127, 201, 0.95);
 }
 
 .list_left > label:last-child {
-    /* border-bottom: 0px; */
+	/* border-bottom: 0px; */
 }
 
 .list_right {
-    margin-left: 90px;
-    width: calc(100% - 90px);
-    overflow-y: scroll;
+	margin-left: 90px;
+	width: calc(100% - 90px);
+	overflow-y: scroll;
 }
 
 .list_right > div > div:last-child {
-    border-bottom: 0px;
+	border-bottom: 0px;
 }
 
-.lr_list{
-    width: 100%;
-    height: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #222;
+.lr_list {
+	width: 100%;
+	height: 80px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 10px;
+	border-bottom: 1px solid #222;
 }
 
 .lr_list > div {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 
 .list_right label {
-    display: inline-block;
-    width: 200px;
+	display: inline-block;
+	width: 200px;
 }
 
 .keyword_list {
-    display: none;
+	display: none;
 }
 
 .keyword1_list {
-    display: block;
+	display: block;
 }
 
 .keyword_radio:checked + label {
-    font-weight: bold;
-    background-color: rgb(77, 127, 201);
+	font-weight: bold;
+	background-color: rgb(77, 127, 201);
 }
