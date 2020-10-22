@@ -1,4 +1,4 @@
-window.onload = ()=>{
+window.onload = () => {
     let list_right = document.querySelector(".list_right");
 
     let keyword_1 = document.querySelector(".keyword_1");
@@ -10,43 +10,63 @@ window.onload = ()=>{
     let keyword3_list = document.querySelector(".keyword3_list");
 
     let keyword_list = document.querySelectorAll(".list_right > div");
-    let i=0;
+    let i = 0;
     // for(i=0; i<keyword_list.length-1; i++) {
 
     //     keyword_1.addEventListener("click", ()=>{
     //         keyword_list[i].style.display = "none";
     //         keyword1_list.style.display = "block";
     //     })
-    
+
     //     keyword_2.addEventListener("click", ()=>{
-    
+
     //     })
-    
+
     //     keyword_3.addEventListener("click", ()=>{
-    
+
     //     })
 
     // }
 
-    keyword_1.addEventListener("click", ()=>{
-        for(i=0; i<keyword_list.length-1; i++) {
+    keyword_1.addEventListener("click", () => {
+        for (i = 0; i < keyword_list.length - 1; i++) {
             keyword_list[i].style.display = "none";
         }
         keyword1_list.style.display = "block";
     })
 
-    keyword_2.addEventListener("click", ()=>{
-        for(i=0; i<keyword_list.length-1; i++) {
+    keyword_2.addEventListener("click", () => {
+        for (i = 0; i < keyword_list.length - 1; i++) {
             keyword_list[i].style.display = "none";
         }
         keyword2_list.style.display = "block";
     })
 
-    keyword_3.addEventListener("click", ()=>{
-        for(i=0; i<keyword_list.length-1; i++) {
+    keyword_3.addEventListener("click", () => {
+        for (i = 0; i < keyword_list.length - 1; i++) {
             keyword_list[i].style.display = "none";
         }
         keyword3_list.style.display = "block";
     })
-    
+
+    chrome.storage.sync.get("keyword", ({ keyword }) => {
+        copyToCliipBoard(keyword)
+    })
+
+
+    function copyToCliipBoard(keyword) {
+        keys = Object.keys(keyword)
+        exp = ""
+
+        exp = JSON.stringify(keyword, null, ' ')
+
+        var t = document.createElement("textarea");
+        document.body.appendChild(t);
+        t.value = exp;
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+
+        alert("클립보드에 복사되었습니다.")
+    }
 }
