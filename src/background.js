@@ -97,7 +97,7 @@ chrome.runtime.onMessage.addListener(async function (message) {
         message.datetime = today.toLocaleString()
 
         message.url = decodeURI(message.url)
-        
+
         // console.log("background.js / dblclick messageListen : ")
         // console.log(message)
 

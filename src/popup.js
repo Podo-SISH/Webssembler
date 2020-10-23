@@ -35,7 +35,7 @@ window.onload = function(){
 
     multi_highlight.addEventListener("click", ()=>{
         changesize();
-        con_iframe.src = "subpage/multi_highlight.html";
+        con_iframe.src = "multi_highlight/multi_highlight.html";
     })
 
     let save_keywordflag = 1;
@@ -56,13 +56,13 @@ window.onload = function(){
 
     screen_capture.addEventListener("click", ()=>{
         changesize();
-        con_iframe.src = "subpage/screen_capture.html";
+        con_iframe.src = "screen_capture/screen_capture.html";
     })
 
     save_list.addEventListener("click", ()=>{
         main.style.width = "630px";
         main.style.height = "400px";
         con_menus.style.height = "360px";
-        con_iframe.src = "subpage/save_list.html";
+        con_iframe.src = "save_list/save_list.html";
     })
 }
