@@ -17,7 +17,7 @@ window.onload = function(){
     let con_iframe = document.querySelector(".con_iframe");
 
     let multi_highlight = document.querySelector(".multi_highlight");
-    let save_keyword = document.querySelector(".save_keyword");
+    // let save_keyword = document.querySelector(".save_keyword");
     let screen_capture = document.querySelector(".screen_capture");
     let save_list = document.querySelector(".save_list");
 
@@ -38,21 +38,20 @@ window.onload = function(){
         con_iframe.src = "multi_highlight/multi_highlight.html";
     })
 
-    let save_keywordflag = 1;
-
-    save_keyword.addEventListener("click", ()=>{
-        if(save_keywordflag == 0) {
-            save_keyword.style.backgroundColor = "rgb(32, 115, 224)";
-            on.style.display = "none";
-            off.style.display = "inline-block";
-            save_keywordflag = 1;
-        }else {
-            save_keyword.style.backgroundColor = "#629DE9";
-            on.style.display = "inline-block";
-            off.style.display = "none";
-            save_keywordflag = 0;
-        }
-    })
+    // let save_keywordflag = 1;
+    // save_keyword.addEventListener("click", ()=>{
+    //     if(save_keywordflag == 0) {
+    //         save_keyword.style.backgroundColor = "rgb(32, 115, 224)";
+    //         on.style.display = "none";
+    //         off.style.display = "inline-block";
+    //         save_keywordflag = 1;
+    //     }else {
+    //         save_keyword.style.backgroundColor = "#629DE9";
+    //         on.style.display = "inline-block";
+    //         off.style.display = "none";
+    //         save_keywordflag = 0;
+    //     }
+    // })
 
     screen_capture.addEventListener("click", ()=>{
         changesize();

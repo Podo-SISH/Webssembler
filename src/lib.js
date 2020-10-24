@@ -48,7 +48,7 @@ function hl_dblclick(settings, tabinfo, className, keyword) {
         + "    position = 0;"
         + (keyword) + ".each((idx, element) => {"
         + "        if(element == e.target){"
-        + "            position = idx;"
+        + "            position = idx + 1;"
         + "        }"
         + "    });"
         + "    chrome.runtime.sendMessage({"
