@@ -60,9 +60,9 @@ window.onload = function(){
     })
 
     save_list.addEventListener("click", ()=>{
-        main.style.width = "630px";
-        main.style.height = "400px";
-        con_menus.style.height = "360px";
+        main.style.width = "500px";
+        main.style.height = "300px";
+        con_menus.style.height = "300px";
         con_iframe.src = "save_list/save_list.html";
     })
 }
