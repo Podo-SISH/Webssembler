@@ -1,8 +1,9 @@
 let list_left;
 let list_right;
+let keywords;
 
 const fields = {
-    "position": "페이지 내 키워드 위치값",
+    "position": "페이지 내 키워드",
     "url": "URL",
     "title": "출처",
     "datetime": "일시",
@@ -10,6 +11,7 @@ const fields = {
 }
 
 window.onload = () => {
+
 
     list_left = document.querySelector(".list_left");
     list_right = document.querySelector(".list_right");
@@ -20,9 +22,7 @@ window.onload = () => {
     let resetBtn = document.querySelector(".reset");
 
     simpledownBtn.addEventListener("click", () => {
-        chrome.storage.sync.get("keyword", ({ keyword }) => {
-            copyToCliipBoard(keyword)
-        })
+        copyToCliipBoard()
     })
 
 
@@ -36,92 +36,143 @@ window.onload = () => {
     })
 
     resetBtn.addEventListener("click", () => {
-        chrome.storage.sync.set({ "keyword": {} })
+        let res = confirm("데이터가 초기화 하시겠습니까?")
+        if (res) {
+            chrome.storage.sync.set({ "keyword": {} })
 
-        alert("데이터가 초기화 되었습니다.")
+            list_left.innerHTML = "";
+            list_right.innerHTML = "";
+        }
+
     })
-
 
     chrome.storage.sync.get("keyword", ({ keyword }) => {
-        setKeyowrdList(keyword)
+        setKeywords(keyword)
+        setKeywordList();
     })
 }
 
-function setKeyowrdList(keywords) {
-    words = Object.keys(keywords)
-    words.forEach((keyword, idx) => {
-        let radio = document.createElement("input")
-        radio.setAttribute("class", "keyword_radio")
-        radio.setAttribute("type", "radio")
-        radio.setAttribute("id", keyword + "check")
-        radio.setAttribute("name", "keyword")
-        radio.setAttributeNode(document.createAttribute("hidden"))
-
-        list_left.appendChild(radio)
-
-
-        let wordLabel = document.createElement("label")
-        wordLabel.innerText = keyword
-        wordLabel.id = keyword
-        wordLabel.setAttribute("for", keyword + "check")
-
-        list_left.appendChild(wordLabel)
-
-
-        let keyword_data = document.createElement("div")
-        keyword_data.setAttribute("class", "keyword_data")
-
-        list_right.appendChild(keyword_data)
-
-
-        keywords[keyword].forEach((data, dataIdx) => {
-            let dataCon = document.createElement("div")
-            dataCon.setAttribute("class", "lr_list")
-
-            labels = ["title", "url", "position", "datetime"]
-
-            labels.forEach(key => {
-                let t = document.createElement("div")
-
-
-                let label = document.createElement("label")
-                label.innerText = fields[key] + " : " + data[key]
-                label.id = keyword
-                label.setAttribute("for", keyword + dataIdx + key)
-
-                t.appendChild(label)
-
-
-                let checkbox = document.createElement("input")
-                checkbox.setAttribute("type", "checkbox")
-                checkbox.setAttribute("id", keyword + dataIdx + key)
-
-                t.appendChild(checkbox)
-
-
-                dataCon.appendChild(t)
-            });
-
-            keyword_data.appendChild(dataCon)
-        });
-
-
-        wordLabel.addEventListener("click", () => {
-            document.querySelectorAll(".keyword_data").forEach(e => {
-                e.style.display = "none"
-            });
-            keyword_data.style.display = "block";
-        })
-
-
-        if (idx == 0) {
-            radio.setAttributeNode(document.createAttribute("checked"))
-            keyword_data.style.display = "block";
-        }
-    });
+function setKeywords(keyword) {
+    keywords = keyword;
 }
 
-function copyToCliipBoard(keywords) {
+function setKeywordList() {
+    words = Object.keys(keywords)
+    words.forEach(setKeywordLabel);
+}
+
+function setKeywordLabel(keyword, idx) {
+
+    let radio = document.createElement("input")
+    radio.setAttribute("class", "keyword_radio")
+    radio.setAttribute("type", "radio")
+    radio.setAttribute("id", keyword + "check")
+    radio.setAttribute("name", "keyword")
+    radio.setAttributeNode(document.createAttribute("hidden"))
+
+    list_left.appendChild(radio)
+
+
+    let wordLabel = document.createElement("label")
+    wordLabel.innerText = keyword
+    wordLabel.setAttribute("for", keyword + "check")
+
+    list_left.appendChild(wordLabel)
+
+
+    let keyword_data = document.createElement("div")
+    keyword_data.setAttribute("class", "keyword_data " + keyword + "data")
+
+    list_right.appendChild(keyword_data)
+
+
+    keywords[keyword].forEach((data, dataIdx) => {
+        setKeywordData(data, dataIdx)
+    });
+
+
+    wordLabel.addEventListener("click", () => {
+        selectKeyword(keyword)
+    })
+
+
+    if (idx == 0) {
+        radio.setAttributeNode(document.createAttribute("checked"))
+        keyword_data.style.display = "block";
+    } else if (idx == -1) {
+        radio.setAttributeNode(document.createAttribute("checked"))
+        selectKeyword(keyword)
+    }
+}
+
+function selectKeyword(keyword) {
+    
+    document.querySelector("#" + keyword + "check").checked = true
+
+    document.querySelectorAll(".keyword_data").forEach(e => {
+        e.style.display = "none"
+    });
+    document.querySelector("." + keyword + "data").style.display = "block";
+}
+
+function setKeywordData(data, dataIdx) {
+    let keyword = data.keyword
+    let keyword_data = document.querySelector("." + keyword + "data")
+
+    if (dataIdx == -1) {
+        selectKeyword(keyword)
+    }
+
+    let dataCon = document.createElement("div")
+    dataCon.setAttribute("class", "lr_list")
+
+    labels = ["title", "url", "position", "datetime"]
+
+    labels.forEach(key => {
+        let t = document.createElement("div")
+
+
+        let label = document.createElement("label")
+        switch (key) {
+
+            case "url":
+                label.innerHTML = fields[key] + " : <a href='" + data[key] + "'>" + data[key] + "</a>"
+                break
+
+            case "position":
+                label.innerText = fields[key] + " : " + data[key] + "번째"
+                break
+
+            case "datetime":
+                label.innerText = data[key]
+                break
+
+            default:
+                label.innerText = fields[key] + " : " + data[key]
+                break
+
+        }
+        label.setAttribute("for", keyword + dataIdx + key)
+
+        t.appendChild(label)
+
+        if (key != "datetime") {
+
+            let checkbox = document.createElement("input")
+            checkbox.setAttribute("type", "checkbox")
+            checkbox.setAttribute("id", keyword + dataIdx + key)
+
+            t.appendChild(checkbox)
+        }
+
+
+        dataCon.appendChild(t)
+    });
+
+    keyword_data.appendChild(dataCon)
+}
+
+function copyToCliipBoard() {
 
     // exp = JSON.stringify(keywords, null, ' ')
 
@@ -192,3 +243,20 @@ function exportFormat(keywords) {
     return exp
 
 }
+
+chrome.runtime.onMessage.addListener(async function (message) {
+    if (message.event == "addKeyword") {
+        chrome.storage.sync.get("keyword", ({ keyword }) => {
+            setKeywords(keyword)
+
+            let data = document.querySelector("." + message.keyword + "data")
+
+            if (data == null) {
+                setKeywordLabel(message.keyword, -1)
+            } else {
+                setKeywordData(message, -1)
+            }
+
+        })
+    }
+})

@@ -107,8 +107,11 @@
 	align-items: center;
 }
 
-.lr_list > div > *{
+.lr_list > div > label{
 	flex-grow: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .list_right label {

@@ -128,10 +128,14 @@ async function save_keyword_on_sync(keyword, value) {
 
         storage[keyword] = keywordArr
 
-
         chrome.storage.sync.set({ "keyword": storage }, function () {
             console.log('Value is set to ');
             console.log(storage)
+
+            chrome.runtime.sendMessage({
+                ...value,
+                event: 'addKeyword'
+            });
 
             alert_to_tab("키워드가 저장되었습니다. [" + keyword + "]")
         });
