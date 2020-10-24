@@ -17,7 +17,7 @@ window.onload = () => {
     list_right = document.querySelector(".list_right");
 
     let simpledownBtn = document.querySelector(".simpledown");
-    let changeBtn = document.querySelector(".change");
+    // let changeBtn = document.querySelector(".change");
     let deleteBtn = document.querySelector(".delete");
     let resetBtn = document.querySelector(".reset");
 
@@ -26,9 +26,9 @@ window.onload = () => {
     })
 
 
-    changeBtn.addEventListener("click", () => {
+    // changeBtn.addEventListener("click", () => {
 
-    })
+    // })
 
 
     deleteBtn.addEventListener("click", () => {
@@ -121,6 +121,7 @@ function setKeywordData(data, dataIdx) {
 
     if (dataIdx == -1) {
         selectKeyword(keyword)
+        dataIdx = keyword_data.childElementCount
     }
 
     let dataCon = document.createElement("div")
@@ -142,7 +143,7 @@ function setKeywordData(data, dataIdx) {
                 let a = document.createElement("a")
                 a.innerText = data[key]
 
-                a.addEventListener("click", ()=>{
+                a.addEventListener("click", () => {
                     window.open(data[key])
                 })
 
@@ -174,6 +175,9 @@ function setKeywordData(data, dataIdx) {
     let checkbox = document.createElement("input")
     checkbox.setAttribute("type", "checkbox")
     checkbox.setAttribute("id", keyword + dataIdx)
+    checkbox.setAttribute("class", "keyword_check")
+    checkbox.setAttribute("name", keyword)
+    checkbox.setAttribute("value", dataIdx)
 
     dataCon.appendChild(checkbox)
 
@@ -184,8 +188,9 @@ function setKeywordData(data, dataIdx) {
 function copyToCliipBoard() {
 
     // exp = JSON.stringify(keywords, null, ' ')
+    expKeywords = getSelected()
 
-    exp = exportFormat(keywords)
+    exp = exportFormat(expKeywords)
     // 우리가 원하는 export 포맷으로 string 변환하는 함수 필요
 
     if (exp != "") {
@@ -200,6 +205,30 @@ function copyToCliipBoard() {
     } else {
         alert("내보낼 키워드가 없습니다.")
     }
+}
+
+function getSelected() {
+    checkboxes = document.querySelectorAll(".keyword_check");
+
+    ret = {}
+
+    checkboxes.forEach(box => {
+        if (box.checked) {
+            keyword = box.name
+            value = keywords[keyword][box.value]
+
+            if (ret[keyword] == null) keywordArr = []
+            else keywordArr = ret[keyword]
+
+            keywordArr.push(value)
+
+            ret[keyword] = keywordArr
+        }
+    });
+
+    console.log(ret)
+
+    return ret
 }
 
 function exportFormat(keywords) {
