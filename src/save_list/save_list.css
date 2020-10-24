@@ -88,31 +88,41 @@
 }
 
 .list_right > div > div:last-child {
-	border-bottom: 0px;
+	/* border-bottom: 0px; */
 }
 
 .lr_list {
-	width: 100%;
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #222;
+	padding: 10px;
+}
+
+.lr_list:hover {
+	background-color: rgb(243, 243, 243);
+}
+
+.dataValue {
+	flex-grow: 1;
 	height: fit-content;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding: 10px;
-	border-bottom: 1px solid #222;
 }
 
-.lr_list > div {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.lr_list > div > label{
+.dataValue > div {
 	flex-grow: 1;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+.dataValue > div > a {
+	text-decoration: underline;
+	color: blue;
+	cursor: pointer;
+}
+
 
 .list_right label {
 	display: inline-block;

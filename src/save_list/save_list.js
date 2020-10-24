@@ -106,7 +106,7 @@ function setKeywordLabel(keyword, idx) {
 }
 
 function selectKeyword(keyword) {
-    
+
     document.querySelector("#" + keyword + "check").checked = true
 
     document.querySelectorAll(".keyword_data").forEach(e => {
@@ -128,15 +128,26 @@ function setKeywordData(data, dataIdx) {
 
     labels = ["title", "url", "position", "datetime"]
 
+    let dataVal = document.createElement("label")
+    dataVal.setAttribute("class", "dataValue")
+    dataVal.setAttribute("for", keyword + dataIdx)
+
     labels.forEach(key => {
-        let t = document.createElement("div")
 
-
-        let label = document.createElement("label")
+        let label = document.createElement("div")
         switch (key) {
 
             case "url":
-                label.innerHTML = fields[key] + " : <a href='" + data[key] + "'>" + data[key] + "</a>"
+                label.innerHTML = fields[key] + " : "
+                let a = document.createElement("a")
+                a.innerText = data[key]
+
+                a.addEventListener("click", ()=>{
+                    window.open(data[key])
+                })
+
+                label.appendChild(a)
+
                 break
 
             case "position":
@@ -152,22 +163,20 @@ function setKeywordData(data, dataIdx) {
                 break
 
         }
-        label.setAttribute("for", keyword + dataIdx + key)
 
-        t.appendChild(label)
-
-        if (key != "datetime") {
-
-            let checkbox = document.createElement("input")
-            checkbox.setAttribute("type", "checkbox")
-            checkbox.setAttribute("id", keyword + dataIdx + key)
-
-            t.appendChild(checkbox)
-        }
-
-
-        dataCon.appendChild(t)
+        dataVal.appendChild(label)
     });
+
+    dataCon.appendChild(dataVal)
+
+
+
+    let checkbox = document.createElement("input")
+    checkbox.setAttribute("type", "checkbox")
+    checkbox.setAttribute("id", keyword + dataIdx)
+
+    dataCon.appendChild(checkbox)
+
 
     keyword_data.appendChild(dataCon)
 }
