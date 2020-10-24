@@ -32,11 +32,11 @@ window.onload = () => {
 
 
     deleteBtn.addEventListener("click", () => {
-
+        deleteKeyword()
     })
 
     resetBtn.addEventListener("click", () => {
-        let res = confirm("데이터가 초기화 하시겠습니까?")
+        let res = confirm("데이터를 초기화 하시겠습니까?")
         if (res) {
             chrome.storage.sync.set({ "keyword": {} })
 
@@ -177,7 +177,7 @@ function setKeywordData(data, dataIdx) {
     checkbox.setAttribute("id", keyword + dataIdx)
     checkbox.setAttribute("class", "keyword_check")
     checkbox.setAttribute("name", keyword)
-    checkbox.setAttribute("value", dataIdx)
+    checkbox.setAttribute("value", data.position)
 
     dataCon.appendChild(checkbox)
 
@@ -225,8 +225,6 @@ function getSelected() {
             ret[keyword] = keywordArr
         }
     });
-
-    console.log(ret)
 
     return ret
 }
@@ -279,6 +277,51 @@ function exportFormat(keywords) {
     });
 
     return exp
+
+}
+
+function deleteKeyword() {
+    let res = confirm("정말 삭제하시겠습니까?")
+
+    if (!res) return
+
+    checkboxes = document.querySelectorAll(".keyword_check");
+
+    checkboxes.forEach(box => {
+        if (box.checked) {
+            keyword = box.name
+            let idx = keywords[keyword].findIndex((e) => e.position == box.value)
+            keywords[keyword].splice(idx, 1)
+        }
+    });
+
+
+    console.log("deleted")
+    console.log(keywords)
+
+
+    keys = Object.keys(keywords)
+
+    keys.forEach(key => {
+        while (1) {
+            idx = keywords[key].indexOf(undefined)
+
+            if (idx == -1) break;
+
+            keywords[key].splice(idx, 1)
+        }
+
+    });
+
+    console.log("deleted")
+    console.log(keywords)
+
+    chrome.storage.sync.set({ "keyword": keywords }, () => {
+        list_left.innerHTML = "";
+        list_right.innerHTML = "";
+
+        setKeywordList()
+    })
 
 }
 

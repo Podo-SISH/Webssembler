@@ -65,3 +65,9 @@ window.onload = function(){
         con_iframe.src = "save_list/save_list.html";
     })
 }
+
+chrome.runtime.onMessage.addListener(async function (message) {
+    if (message.event == "alert") {
+        alert(message.message)
+    }
+})

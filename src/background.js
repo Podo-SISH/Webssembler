@@ -98,15 +98,12 @@ chrome.runtime.onMessage.addListener(async function (message) {
 
         message.url = decodeURI(message.url)
 
-        // console.log("background.js / dblclick messageListen : ")
-        // console.log(message)
-
         save_keyword_on_sync(message.keyword.toLowerCase(), message)
     }
 })
 
-async function save_keyword_on_sync(keyword, value) {
-    await chrome.storage.sync.get("keyword", function (result) {
+function save_keyword_on_sync(keyword, value) {
+    chrome.storage.sync.get("keyword", function (result) {
 
         storage = result.keyword
         // storage = {}
@@ -116,13 +113,21 @@ async function save_keyword_on_sync(keyword, value) {
         if (storage[keyword] == null) keywordArr = []
         else keywordArr = storage[keyword]
 
-        for (i = 0; i < keywordArr.length; i++) {
-            if (keywordArr[i].url == value.url && keywordArr[i].position == value.position) {
-                alert_to_tab("이미 저장된 키워드입니다.")
+        let flag = false
 
-                return
+        keywordArr.forEach(element => {
+            if (element.url == value.url && element.position == value.position && !flag) {
+                chrome.runtime.sendMessage({
+                    event: 'alert',
+                    message: "이미 저장된 키워드입니다."
+                });
+
+                flag = true
             }
-        };
+        });
+
+        if (flag) return
+
 
         keywordArr.push(value)
 
@@ -137,17 +142,10 @@ async function save_keyword_on_sync(keyword, value) {
                 event: 'addKeyword'
             });
 
-            alert_to_tab("키워드가 저장되었습니다. [" + keyword + "]")
+            chrome.runtime.sendMessage({
+                event: 'alert',
+                message: "키워드가 저장되었습니다. [" + keyword + "]"
+            });
         });
     });
-}
-
-
-function alert_to_tab(message) {
-    code = "alert('" + message + "');"
-
-    chrome.tabs.executeScript(null,
-        {
-            code: code
-        }, _ => chrome.runtime.lastError);
 }
