@@ -58,6 +58,7 @@ function hl_dblclick(settings, tabinfo, className, keyword) {
         + "        title: document.title,"
         + "        position: position"
         + "    });"
+        + "    alert('키워드가 저장되었습니다. [" + keyword + "]');"
         + "});"
 
     chrome.tabs.executeScript (tabinfo.id,

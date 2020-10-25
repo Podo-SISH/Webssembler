@@ -5,6 +5,7 @@
     padding-right: 3px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
     text-decoration: none;
+    cursor: pointer;
 }
 
 .chrome-extension-FindManyStrings-style-0 { color: #000; background: #ffc600; }

@@ -88,20 +88,6 @@ chrome.contextMenus.onClicked.addListener(function getword(info, tab) {
 
 });
 
-chrome.runtime.onMessage.addListener(async function (message) {
-    if (message.event == "dblclick") {
-
-        delete (message.event)
-
-        var today = new Date
-        message.datetime = today.toLocaleString()
-
-        message.url = decodeURI(message.url)
-
-        save_keyword_on_sync(message.keyword.toLowerCase(), message)
-    }
-})
-
 function save_keyword_on_sync(keyword, value) {
     chrome.storage.sync.get("keyword", function (result) {
 
@@ -149,3 +135,26 @@ function save_keyword_on_sync(keyword, value) {
         });
     });
 }
+
+
+chrome.runtime.onMessage.addListener(async function (message) {
+    if (message.event == "dblclick") {
+
+        delete (message.event)
+
+        var today = new Date
+        message.datetime = today.toLocaleString()
+
+        message.url = decodeURI(message.url)
+
+        save_keyword_on_sync(message.keyword.toLowerCase(), message)
+    }
+    // else if (message.event == "alert") {
+    //     // code = "alert('" + message.message + "');"
+    //     chrome.tabs.executeScript(
+    //         {
+    //             code: "alert('asdads');"
+    //         }, _ => chrome.runtime.lastError
+    //     );
+    // }
+})
