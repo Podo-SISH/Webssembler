@@ -18,7 +18,7 @@ window.onload = function(){
 
     let multi_highlight = document.querySelector(".multi_highlight");
     // let save_keyword = document.querySelector(".save_keyword");
-    let screen_capture = document.querySelector(".screen_capture");
+    // let screen_capture = document.querySelector(".screen_capture");
     let save_list = document.querySelector(".save_list");
 
     let main = document.querySelector(".main");
@@ -53,10 +53,10 @@ window.onload = function(){
     //     }
     // })
 
-    screen_capture.addEventListener("click", ()=>{
-        changesize();
-        con_iframe.src = "screen_capture/screen_capture.html";
-    })
+    // screen_capture.addEventListener("click", ()=>{
+    //     changesize();
+    //     con_iframe.src = "screen_capture/screen_capture.html";
+    // })
 
     save_list.addEventListener("click", ()=>{
         main.style.width = "500px";
