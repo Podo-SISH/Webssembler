@@ -28,10 +28,8 @@
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+F",
-        "mac": "Command+Shift+F",
-        "chromeos": "Ctrl+Shift+F",
-        "linux": "Ctrl+Shift+F"
+        "windows": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
       },
       "description": "Activate the extension"
     }
