@@ -215,7 +215,8 @@ function getSelected() {
     checkboxes.forEach(box => {
         if (box.checked) {
             keyword = box.name
-            value = keywords[keyword][box.value]
+            idx = keywords[keyword].findIndex((e) => e.position == box.value)
+            value = keywords[keyword][idx]
 
             if (ret[keyword] == null) keywordArr = []
             else keywordArr = ret[keyword]
