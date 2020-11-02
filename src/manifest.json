@@ -10,19 +10,32 @@
     },
     "default_popup": "popup.html"
   },
-  "icons": { 
+  "icons": {
     "16": "img/icon16.png",
     "48": "img/icon48.png",
     "128": "img/icon128.png",
     "350": "img/icon350.png"
   },
-  "content_scripts": [ {
-      "matches": [ "<all_urls>" ],
-      "js": [ "jquery/jquery.js", "jquery/jquery.highlight.js", "multi_highlight/multi_highlight.js" ],
-      "css": [ "highlight.css" ]
-   } ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "jquery/jquery.js",
+        "jquery/jquery.highlight.js",
+        "multi_highlight/multi_highlight.js"
+      ],
+      "css": [
+        "highlight.css"
+      ]
+    }
+  ],
   "background": {
-    "scripts": [ "lib.js", "background.js" ],
+    "scripts": [
+      "lib.js",
+      "background.js"
+    ],
     "persistent": false
   },
   "commands": {
@@ -35,6 +48,10 @@
     }
   },
   "permissions": [
-  "activeTab", "http://*/*", "https://*/*", "storage", "contextMenus"
+    "activeTab",
+    "http://*/*",
+    "https://*/*",
+    "storage",
+    "contextMenus"
   ]
 }

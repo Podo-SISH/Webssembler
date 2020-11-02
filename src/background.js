@@ -92,7 +92,6 @@ function save_keyword_on_sync(keyword, value) {
     chrome.storage.sync.get("keyword", function (result) {
 
         storage = result.keyword
-        // storage = {}
 
         if (storage == null) storage = {}
 
@@ -149,12 +148,4 @@ chrome.runtime.onMessage.addListener(async function (message) {
 
         save_keyword_on_sync(message.keyword.toLowerCase(), message)
     }
-    // else if (message.event == "alert") {
-    //     // code = "alert('" + message.message + "');"
-    //     chrome.tabs.executeScript(
-    //         {
-    //             code: "alert('asdads');"
-    //         }, _ => chrome.runtime.lastError
-    //     );
-    // }
 })

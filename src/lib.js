@@ -61,7 +61,7 @@ function hl_dblclick(settings, tabinfo, className, keyword) {
         + "    alert('키워드가 저장되었습니다. [" + keyword + "]');"
         + "});"
 
-    chrome.tabs.executeScript (tabinfo.id,
+    chrome.tabs.executeScript(tabinfo.id,
         {
             code: code
         }, _ => chrome.runtime.lastError
