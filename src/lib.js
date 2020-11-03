@@ -13,7 +13,7 @@ function hl_search(addedKws, settings, tabinfo) {
                     + "', {className:'"
                     + settings.CSSprefix1 + " "
                     + (settings.CSSprefix2 + (tabinfo.style_nbr % settings.CSS_COLORS_COUNT)) + " "
-                    + (settings.CSSprefix3 + (addedKws[i])) // escape special characters
+                    + (settings.CSSprefix3 + (addedKws[i]))
                     + "'});"
                     + "var " + (addedKws[i])
                     + "= $('." + (settings.CSSprefix3 + (addedKws[i])) + "');"
@@ -168,12 +168,10 @@ function handle_popupSize_change(newHeight, newWidth) {
     chrome.storage.local.get(['settings'], function (result) {
         is_changed = false;
         if (newHeight) {
-            console.log("newhight:" + newHeight);
             result.settings.popup_height = newHeight;
             is_changed = true;
         }
         if (newWidth) {
-            console.log("newWidth:" + newWidth);
             result.settings.popup_width = newWidth;
             is_changed = true;
         }

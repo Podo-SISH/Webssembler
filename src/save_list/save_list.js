@@ -11,25 +11,16 @@ const fields = {
 }
 
 window.onload = () => {
-
-
     list_left = document.querySelector(".list_left");
     list_right = document.querySelector(".list_right");
 
     let simpledownBtn = document.querySelector(".simpledown");
-    // let changeBtn = document.querySelector(".change");
     let deleteBtn = document.querySelector(".delete");
     let resetBtn = document.querySelector(".reset");
 
     simpledownBtn.addEventListener("click", () => {
         copyToCliipBoard()
     })
-
-
-    // changeBtn.addEventListener("click", () => {
-
-    // })
-
 
     deleteBtn.addEventListener("click", () => {
         deleteKeyword()
@@ -170,8 +161,6 @@ function setKeywordData(data, dataIdx) {
 
     dataCon.appendChild(dataVal)
 
-
-
     let checkbox = document.createElement("input")
     checkbox.setAttribute("type", "checkbox")
     checkbox.setAttribute("id", keyword + dataIdx)
@@ -181,17 +170,14 @@ function setKeywordData(data, dataIdx) {
 
     dataCon.appendChild(checkbox)
 
-
     keyword_data.appendChild(dataCon)
 }
 
 function copyToCliipBoard() {
 
-    // exp = JSON.stringify(keywords, null, ' ')
     expKeywords = getSelected()
 
     exp = exportFormat(expKeywords)
-    // 우리가 원하는 export 포맷으로 string 변환하는 함수 필요
 
     if (exp != "") {
         var t = document.createElement("textarea");
@@ -282,6 +268,13 @@ function exportFormat(keywords) {
 }
 
 function deleteKeyword() {
+    let selected = getSelected();
+
+    if (Object.keys(selected).length === 0) {
+        alert("삭제할 키워드가 없습니다.")
+        return
+    }
+
     let res = confirm("정말 삭제하시겠습니까?")
 
     if (!res) return
@@ -296,11 +289,6 @@ function deleteKeyword() {
         }
     });
 
-
-    console.log("deleted")
-    console.log(keywords)
-
-
     keys = Object.keys(keywords)
 
     keys.forEach(key => {
@@ -312,10 +300,11 @@ function deleteKeyword() {
             keywords[key].splice(idx, 1)
         }
 
-    });
+        if (keywords[key].length === 0) {
+            delete keywords[key]
+        }
 
-    console.log("deleted")
-    console.log(keywords)
+    });
 
     chrome.storage.sync.set({ "keyword": keywords }, () => {
         list_left.innerHTML = "";
@@ -324,6 +313,8 @@ function deleteKeyword() {
         setKeywordList()
     })
 
+    alert("삭제되었습니다.")
+    return
 }
 
 chrome.runtime.onMessage.addListener(async function (message) {

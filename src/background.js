@@ -21,12 +21,12 @@ chrome.runtime.onInstalled.addListener(function (details) {
     // add context menu item
     chrome.contextMenus.create({
         title: 'Remove Keyword',
-        id: 'removeKw', // you'll use this in the handler function to identify this context menu item
+        id: 'removeKw',
         contexts: ['selection'],
     });
     chrome.contextMenus.create({
         title: 'Add Keyword',
-        id: 'addKw', // you'll use this in the handler function to identify this context menu item
+        id: 'addKw',
         contexts: ['selection'],
     });
 
@@ -119,8 +119,6 @@ function save_keyword_on_sync(keyword, value) {
         storage[keyword] = keywordArr
 
         chrome.storage.sync.set({ "keyword": storage }, function () {
-            console.log('Value is set to ');
-            console.log(storage)
 
             chrome.runtime.sendMessage({
                 ...value,
